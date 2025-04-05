@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click & Cart | Admin Panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="../assets/x-icon.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+        }
+        .header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .header h2 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            background: #555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .admin-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        .dark-mode {
+            background-color: #222;
+            color: white;
+        }
+        .dark-mode .card {
+            background: #333;
+        }
+        .logout-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Check if admin is logged in
+        if (localStorage.getItem("admin_logged_in") !== "true") {
+            alert("Access Denied! Please log in.");
+            window.location.href = "admin_login.html"; // Redirect to login page
+        }
+
+        function logout() {
+            localStorage.removeItem("admin_logged_in");
+            window.location.href = "admin_login.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="header">
+            <h2><img src="../assets/x-icon.png" alt="Logo"> Click & Cart - Admin Dashboard</h2>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <div class="admin-info">
+            <img src="admin.jpg" alt="Admin Profile">
+            <div>
+                <h3>Admin: Utkarsha Dhanawade</h3>
+                <p>Managing e-commerce analytics and user activities.</p>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p id="totalUsers">Loading...</p>
+            </div>
+            <div class="card">
+                <h3>Orders This Month</h3>
+                <p id="orders">Loading...</p>
+            </div>
+            <div class="card">
+                <h3>Sales Revenue</h3>
+                <p id="revenue">Loading...</p>
+            </div>
+            <div class="card">
+                <h3>Pending Orders</h3>
+                <p id="pendingOrders">Loading...</p>
+            </div>
+            <div class="card">
+                <h3>Customer Support Tickets</h3>
+                <p id="supportTickets">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <h3>User Activity</h3>
+            <canvas id="userChart"></canvas>
+        </div>
+    </div>
+    <script>
+        document.getElementById("totalUsers").innerText = "1,452,783";
+        document.getElementById("orders").innerText = "12,50,345";
+        document.getElementById("revenue").innerText = "₹9,80,50,765";
+        document.getElementById("pendingOrders").innerText = "2,345";
+        document.getElementById("supportTickets").innerText = "189";
+        
+        const ctx = document.getElementById('userChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+                datasets: [{
+                    label: 'Active Users',
+                    data: [500, 700, 800, 650, 900],
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
